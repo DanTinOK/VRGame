@@ -28,7 +28,9 @@ var models = [
         info: 'Number 1',
         rotation: '0 180 0',
         lat: 35.461286,
-        lng: -98.3615780
+        lng: -98.3615780,
+        radius: 1.25, 
+        color:"#EF2D5E"
 
     },
     {
@@ -37,7 +39,9 @@ var models = [
         info: 'Number 2',
         rotation: '0 180 0',
         lat: 35.461286,
-        lng: -98.3615780        
+        lng: -98.3615780,
+        radius: 1.25, 
+        color:"#EF2D5E"        
     },
     {
         url: './assets/PeppermintPenguin/model.gltf',
@@ -45,7 +49,9 @@ var models = [
         rotation: '0 180 0',
         info: 'Number 3',
         lat: 35.461286,
-        lng: -98.3615780
+        lng: -98.3615780,
+        radius: 1.25, 
+        color:"#EF2D5E"
     },
     {
         url: './assets/SurprisedSanta/model.gltf',
@@ -53,15 +59,19 @@ var models = [
         rotation: '0 180 0',
         info: 'Number 4',
         lat: 35.461286,
-        lng: -98.3615780
+        lng: -98.3615780,
+        radius: 1.25, 
+        color:"#EF2D5E"        
     },
     {
         url: './assets/ChristmasTree2/model.gltf', 
         scale: '10.08 10.08 10.08',
         rotation: '0 180 0',
-        info: 'NUmber 5',
+        info: 'Number 5',
         lat: 35.461286,
-        lng: -98.3615780
+        lng: -98.3615780,
+        radius: 1.25, 
+        color:"#EF2D5E"        
     },
 ];
 
@@ -92,9 +102,11 @@ function renderPlaces(places) {
     places.forEach((place) => {
         let latitude = place.location.lat;
         let longitude = place.location.lng;
+        let color = place.location.color;
+        let radis = place.location.radius;
 
         let model = document.createElement('a-sphere');
-        model.setAttribute('gps-entity-place', `latitude: ${latitude}; longitude: ${longitude};`);
+        model.setAttribute('gps-entity-place', `latitude: ${latitude}; longitude: ${longitude}; color:${color}; radius: ${radius}`);
 
         setModel(models[modelIndex], model);
 
