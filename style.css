@@ -3,7 +3,7 @@
     justify-content: center;
     position: fixed;
     bottom: 0%;
-    display: flex;
+    display: flex; 
     flex-direction: row;
     width: 100%;
     margin: 0px auto;

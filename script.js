@@ -75,7 +75,7 @@ var setModel = function (model, entity) {
         entity.setAttribute('rotation', model.rotation);
     }
 
-    if (model.position) {
+    if (model.position) { 
         entity.setAttribute('position', model.position);
     }
 
