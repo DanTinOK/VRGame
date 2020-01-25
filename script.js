@@ -30,7 +30,7 @@ var models = [
         lat: 35.461286,
         lng: -98.3615780,
         radius: 1.25, 
-        color:"#EF2D5E"
+        color:'#EF2D5E'
 
     },
     {
@@ -41,7 +41,7 @@ var models = [
         lat: 35.461286,
         lng: -98.3615780,
         radius: 1.25, 
-        color:"#EF2D5E"        
+        color:'#EF2D5E'        
     },
     {
         url: './assets/PeppermintPenguin/model.gltf',
@@ -51,7 +51,7 @@ var models = [
         lat: 35.461286,
         lng: -98.3615780,
         radius: 1.25, 
-        color:"#EF2D5E"
+        color:'#EF2D5E'
     },
     {
         url: './assets/SurprisedSanta/model.gltf',
@@ -61,7 +61,7 @@ var models = [
         lat: 35.461286,
         lng: -98.3615780,
         radius: 1.25, 
-        color:"#EF2D5E"        
+        color:'#EF2D5E'        
     },
     {
         url: './assets/ChristmasTree2/model.gltf', 
@@ -71,7 +71,7 @@ var models = [
         lat: 35.461286,
         lng: -98.3615780,
         radius: 1.25, 
-        color:"#EF2D5E"        
+        color:'#EF2D5E'        
     },
 ];
 
