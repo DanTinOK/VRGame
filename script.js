@@ -107,7 +107,7 @@ function renderPlaces(places) {
 
         let model = document.createElement('a-sphere');
         model.setAttribute('gps-entity-place', `latitude: ${latitude}; longitude: ${longitude}; color: ${color}; radius: ${radius};`);
-        model.setAttribute('color', $'{color}');
+        model.setAttribute('color', `${color}`);
 
         setModel(models[modelIndex], model);
 
