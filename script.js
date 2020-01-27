@@ -89,6 +89,12 @@ var setModel = function (model, entity) {
         entity.setAttribute('position', model.position);
     }
 
+ 
+    if (model.color) { 
+        entity.setAttribute('color', model.color);
+    }
+
+
     //entity.setAttribute('gltf-model', model.url);
      
 
