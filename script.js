@@ -23,25 +23,27 @@ function staticLoadPlaces() {
 var models = [
     
         {
-        url: './assets/snowman/model.gltf',
+        music: './assets/',
         scale: '12.5 12.5 12.5',
         info: 'Number 1',
         rotation: '0 180 0',
         lat: 35.461286,
         lng: -98.3615780,
         radius: 1.25, 
-        color:'#ff0000'
+        color:'#ff0000',
+        alink: 'Number1'
 
     },
     {
-        url: './assets/ChristmasTree/model.gltf',
+        music: './assets/ChristmasTree/model.gltf',
         scale: '40.5 40.5 40.5',
         info: 'Number 2',
         rotation: '0 180 0',
         lat: 35.461286,
         lng: -98.3615780,
         radius: 1.25, 
-        color:'#00ff00'      
+        color:'#00ff00',
+        alink: 'Number2'              
     },
     {
         url: './assets/PeppermintPenguin/model.gltf',
@@ -51,7 +53,8 @@ var models = [
         lat: 35.461286,
         lng: -98.3615780,
         radius: 1.25, 
-        color:'#0000ff'
+        color:'#0000ff',
+        alink: 'Number3'        
     },
     {
         url: './assets/SurprisedSanta/model.gltf',
@@ -61,7 +64,8 @@ var models = [
         lat: 35.461286,
         lng: -98.3615780,
         radius: 1.25, 
-        color:'#eeee00'
+        color:'#eeee00',
+        alink: 'Number4'        
     },
     {
         url: './assets/ChristmasTree2/model.gltf', 
@@ -71,7 +75,8 @@ var models = [
         lat: 35.461286,
         lng: -98.3615780,
         radius: 1.25, 
-        color:'#00eeee'     
+        color:'#00eeee', 
+        alink: 'Number5'            
     },
 ];
 
@@ -95,9 +100,6 @@ var setModel = function (model, entity) {
     }
 
 
-    //entity.setAttribute('gltf-model', model.url);
-     
-
     const div = document.querySelector('.instructions');
     div.innerText = model.info;
 };
@@ -117,7 +119,6 @@ function renderPlaces(places) {
 
         setModel(models[modelIndex], model);
 
-//        model.setAttribute('animation-mixer', '');
 
         document.querySelector('button[data-action="change"]').addEventListener('click', function () {
             var entity = document.querySelector('[gps-entity-place]');
@@ -128,4 +129,34 @@ function renderPlaces(places) {
 
         scene.appendChild(model);
     });
+}
+
+function loadLocations() {
+
+    var locationRequest = new XMLHttpRequest();
+    locationRequest.open('GET', 'https://gamemaster.dannyalantaylor.info/api/VR');
+
+    locationRequest.onload = function () {
+
+        var mydata = locationRequest.responseText;
+        console.log(JSON.parse(mydata)[0]);
+
+        var locations = JSON.parse(mydata);
+
+        for (var key in locations) 
+        {
+        new model({
+            music: locations[key].music,
+            scale: locations[key].scale,
+            info:  locations[key].info,
+            rotation:  locations[key].rotation,
+            lat:  locations[key].lat,
+            lng:  locations[key].lng,
+            radius:  locations[key].radius, 
+            color:  locations[key].color,
+            alink:  locations[key].alink 
+            });        
+        }
+    };
+    locationRequest.send();
 }
