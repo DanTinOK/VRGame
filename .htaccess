@@ -3,7 +3,7 @@
      RewriteCond %{REQUEST_METHOD} OPTIONS
      RewriteRule ^(.*)$ $1 [L,R=204]
 
-###################
+################### 
 ## Add custom headers
 
     Header set X-Content-Type-Options "nosniff"
