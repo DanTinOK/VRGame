@@ -1,86 +1,49 @@
 
+var xmod; 
+var models = [];
+var modelIndex = 0;
+
+var tunes=[];
+
+function loadTunes()
+{
+tunes[0] = 'Assets/BackInBlack.mp3';
+tunes[1] = 'Assets/EveryRose.mp3';
+tunes[2] = 'Assets/LoveInAnElevator.mp3';
+tunes[3] = 'Assets/MrJones.mp3';
+tunes[4] = 'Assets/PourSomeSugarOnMe.mp3';
+}
+
+
+
 window.onload = () => {
     const button = document.querySelector('button[data-action="change"]');
     button.innerText = '﹖';
 
-    let places = staticLoadPlaces();
-    renderPlaces(places);
+    loadLocations(); 
+    playMusic(); 
+
 };
 
-function staticLoadPlaces() {
-    return [
-        {
-            name: 'Welcome to the game',
-            location: {
-                // decomment the following and add coordinates:
-                lat: 35.461546,
-                lng: -98.361598
-            },
-        },
-    ];
-}
 
-var models = [
-    
-        {
-        music: './assets/',
-        scale: '12.5 12.5 12.5',
-        info: 'Number 1',
-        rotation: '0 180 0',
-        lat: 35.461286,
-        lng: -98.3615780,
-        radius: 1.25, 
-        color:'#ff0000',
-        alink: 'Number1'
+class model 
+{  // Create the class
+    constructor(xmod) 
+    {  // Class constructor
+      this.music = xmod.music;
+      this.scale = xmod.scale;
+      this.info = xmod.info;
+      this.rotation = xmod.rotation;
+      this.lat = xmod.lat;
+      this.lng = xmod.lng;
+      this.radius = xmod.radius; 
+      this.color = xmod.color;
+      this.alink = xmod.alink; 
+    }
+  }
 
-    },
-    {
-        music: './assets/ChristmasTree/model.gltf',
-        scale: '40.5 40.5 40.5',
-        info: 'Number 2',
-        rotation: '0 180 0',
-        lat: 35.461286,
-        lng: -98.3615780,
-        radius: 1.25, 
-        color:'#00ff00',
-        alink: 'Number2'              
-    },
-    {
-        url: './assets/PeppermintPenguin/model.gltf',
-        scale: '10.2 10.2 10.2',
-        rotation: '0 180 0',
-        info: 'Number 3',
-        lat: 35.461286,
-        lng: -98.3615780,
-        radius: 1.25, 
-        color:'#0000ff',
-        alink: 'Number3'        
-    },
-    {
-        url: './assets/SurprisedSanta/model.gltf',
-        scale: '22.0 22.0 22.0',
-        rotation: '0 180 0',
-        info: 'Number 4',
-        lat: 35.461286,
-        lng: -98.3615780,
-        radius: 1.25, 
-        color:'#eeee00',
-        alink: 'Number4'        
-    },
-    {
-        url: './assets/ChristmasTree2/model.gltf', 
-        scale: '10.08 10.08 10.08',
-        rotation: '0 180 0',
-        info: 'Number 5',
-        lat: 35.461286,
-        lng: -98.3615780,
-        radius: 1.25, 
-        color:'#00eeee', 
-        alink: 'Number5'            
-    },
-];
 
-var modelIndex = 0;
+
 var setModel = function (model, entity) {
     if (model.scale) {
         entity.setAttribute('scale', model.scale);
@@ -94,69 +57,83 @@ var setModel = function (model, entity) {
         entity.setAttribute('position', model.position);
     }
 
- 
     if (model.color) { 
         entity.setAttribute('color', model.color);
     }
-
 
     const div = document.querySelector('.instructions');
     div.innerText = model.info;
 };
 
+
+function playMusic()
+{
+    loadTunes(); 
+    let scene = document.querySelector('a-scene');
+    let tune = document.createElement('a-sound');
+    tune.setAttribute('src',tunes[getRandomNumber(tunes.length)])
+    tune.setAttribute('autoplay','true');
+
+    scene.appendChild(tune);
+}
+
+function getRandomNumber (max) {
+    
+     var rand = Math.floor(Math.random() * max);
+     return rand; 
+}
+
+
 function renderPlaces(places) {
     let scene = document.querySelector('a-scene');
 
     places.forEach((place) => {
-        let latitude = place.location.lat;
-        let longitude = place.location.lng;
-        let color = place.location.color;
-        let radius = place.location.radius;
+        let latitude = place.lat;
+        let longitude = place.lng;
+        let color = place.color;
+        let radius = place.radius;
+        let scale = place.scale;
 
         let model = document.createElement('a-sphere');
-        model.setAttribute('gps-entity-place', `latitude: ${latitude}; longitude: ${longitude}; color: ${color}; radius: ${radius};`);
+        model.setAttribute('gps-entity-place', `latitude: ${latitude}; longitude: ${longitude};`);
         model.setAttribute('color', `${color}`);
+        model.setAttribute('radius', radius);
+        model.setAttribute('scale', scale);
+        model.setAttribute('id','NewSphere')
 
         setModel(models[modelIndex], model);
-
-
         document.querySelector('button[data-action="change"]').addEventListener('click', function () {
             var entity = document.querySelector('[gps-entity-place]');
             modelIndex++;
             var newIndex = modelIndex % models.length;
             setModel(models[newIndex], entity);
         });
-
         scene.appendChild(model);
+
+        console.log( $('NewSphere'));
     });
 }
 
 function loadLocations() {
 
     var locationRequest = new XMLHttpRequest();
-    locationRequest.open('GET', 'https://gamemaster.dannyalantaylor.info/api/VR');
+var server = 'https://gamemaster.dannyalantaylor.info' 
+
+    locationRequest.open('GET', server + '/api/VR');
 
     locationRequest.onload = function () {
 
         var mydata = locationRequest.responseText;
         console.log(JSON.parse(mydata)[0]);
 
-        var locations = JSON.parse(mydata);
+        objarray = JSON.parse(mydata);
 
-        for (var key in locations) 
+        for (var key in objarray) 
         {
-        new model({
-            music: locations[key].music,
-            scale: locations[key].scale,
-            info:  locations[key].info,
-            rotation:  locations[key].rotation,
-            lat:  locations[key].lat,
-            lng:  locations[key].lng,
-            radius:  locations[key].radius, 
-            color:  locations[key].color,
-            alink:  locations[key].alink 
-            });        
+        var mdl = new model(objarray[key]);    
+        models.push(mdl);
         }
+        renderPlaces(models);
     };
     locationRequest.send();
 }
